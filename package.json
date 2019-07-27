@@ -26,19 +26,16 @@
   "author": "Garrett Weems <gwgraphicdesign@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@types/bluebird": "^3.5.27",
     "axios": "^0.18.0",
     "bluebird": "^3.5.4",
-    "image-downloader": "^3.4.2",
-    "prettier": "^1.18.2",
-    "request": "^2.88.0",
-    "request-progress": "^3.0.0",
-    "slugify": "^1.3.4"
+    "image-downloader": "^3.4.2"
   },
   "peerDependencies": {
     "gatsby": ">=2"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.27",
+    "prettier": "^1.18.2",
     "@types/node": "^12.6.8",
     "@types/request": "^2.48.2",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
