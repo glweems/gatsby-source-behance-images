@@ -1,0 +1,7 @@
+yarn.lock
+yarn-error.log
+gatsby-node.js.map
+.eslintrc.js
+README.md
+.prettierrc
+.editorconfig
