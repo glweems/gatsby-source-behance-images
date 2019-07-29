@@ -22,6 +22,9 @@ plugins: [
             username: '<< Your username >>',
             // You can get your API Key here: https://www.behance.net/dev/register
             apiKey: '<< API Key >>',
+            // OPTIONAL
+            // Path were images should be downloaded
+            userDir: 'public'
         }
     }
 ]
