@@ -1,6 +1,6 @@
 # gatsby-source-behance-images
 
-A Gatsby source plugin for sourcing data into your Gatsby application from Facebooks graph API.
+A Gatsby source plugin for sourcing data into your Gatsby application from behance's api and downloading the images to use with gatsby-image
 
 ## Install
 
@@ -19,47 +19,77 @@ plugins: [
         resolve: `gatsby-source-behance`,
         options: {
             // Visit your profile and grab the name after behance.net/<< username >>
-            username: '<< Your username >>',
+            username: 'glweems',
             // You can get your API Key here: https://www.behance.net/dev/register
-            apiKey: '<< API Key >>',
+            apiKey: '<API Key>'
+
             // OPTIONAL
-            // Path were images should be downloaded
-            userDir: 'public'
+            // Set custom directory for downloaded images
+            directory: 'public'
         }
     }
-]
+];
 ```
+
 ```graphql
 # Example Query
-{
-    allBehanceProjects {
+query AllBehanceProjects {
+    allBehanceProject {
+        nodes {
+            slug
+            name
+            modified_on
+            description
+            created_on
+            copyright {
+                description
+            }
+        }
+    }
+}
+```
+
+```graphql
+query BehanceUserQuery {
+    behanceUser {
+        tags
+        company
+        avatar
+        place {
+            city
+            country
+            location
+            state
+        }
+        stats {
+            appreciations
+            comments
+            followers
+            following
+            team_members
+            views
+        }
+        url
+        website
+        names {
+            lastName
+            displayName
+            firstName
+            username
+        }
+    }
+}
+```
+
+```graphql
+# Query images for gatsby-img
+query FluidBehanceImages {
+    allFile(filter: { sourceInstanceName: { eq: "behanceProject" } }) {
         edges {
             node {
-                name
-                projectID
-                published
-                created
-                modified
-                conceived
-                url
-                privacy
-                areas
-                tags
-                description
-                tools
-                styles
-                covers {
-                    size_original
-                }
-                owners
-                stats {
-                    views
-                    appreciations
-                    comments
-                }
-                modules {
-                    sizes {
-                        size_original
+                childImageSharp {
+                    fixed(width: 400) {
+                        ...GatsbyImageSharpFixed
                     }
                 }
             }
@@ -68,46 +98,17 @@ plugins: [
 }
 ```
 
-
 ```graphql
-{
-    behanceUser {
-        names {
-            displayName
-            firstName
-            lastName
-            username
-        }
-        userID
-        url
-        website
-        avatar
-        company
-        place {
-            city
-            state
-            country
-            location
-        }
-        areas
-        stats {
-            followers
-            following
-            appreciations
-            views
-            comments
-            team_members
-        }
-        links {
-            title
-            url
-        }
-        sections
-        socialMedia {
-            social_id
-            url
-            service_name
-            value
+# Query project covers
+query BehanceProjectCovers {
+    allFile(filter: { name: { eq: "cover" }, relativeDirectory: { regex: "/gatsby-source-behance-images/" } }) {
+        edges {
+            node {
+                name
+                sourceInstanceName
+                relativePath
+                relativeDirectory
+            }
         }
     }
 }
