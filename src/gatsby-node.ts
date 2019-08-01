@@ -172,7 +172,7 @@ export const sourceNodes = async (
             ...project,
             id: projectID,
             internal: {
-                type: 'behanceProject',
+                type: 'behanceProjects',
                 contentDigest: createContentDigest(project)
             }
         });
