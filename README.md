@@ -16,7 +16,7 @@ or
 // In your gatsby-config.js
 plugins: [
     {
-        resolve: `gatsby-source-behance`,
+        resolve: `gatsby-source-behance-images`,
         options: {
             // Visit your profile and grab the name after behance.net/<< username >>
             username: 'glweems',
@@ -31,10 +31,11 @@ plugins: [
 ];
 ```
 
+Query all projects
+
 ```graphql
-# Example Query
 query AllBehanceProjects {
-    allBehanceProject {
+    allBehanceProjects {
         nodes {
             slug
             name
@@ -48,6 +49,8 @@ query AllBehanceProjects {
     }
 }
 ```
+
+Query user information
 
 ```graphql
 query BehanceUserQuery {
@@ -81,8 +84,9 @@ query BehanceUserQuery {
 }
 ```
 
+Query data for gatsby-image
+
 ```graphql
-# Query images for gatsby-img
 query FluidBehanceImages {
     allFile(filter: { sourceInstanceName: { eq: "behanceProject" } }) {
         edges {
@@ -98,8 +102,9 @@ query FluidBehanceImages {
 }
 ```
 
-```graphql
 # Query project covers
+
+```graphql
 query BehanceProjectCovers {
     allFile(filter: { name: { eq: "cover" }, relativeDirectory: { regex: "/gatsby-source-behance-images/" } }) {
         edges {
