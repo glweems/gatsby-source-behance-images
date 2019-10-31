@@ -5,10 +5,8 @@ import * as path from 'path';
 import * as download from 'image-downloader';
 import { createFileNode } from 'gatsby-source-filesystem/create-file-node';
 
-
-
 export const sourceNodes = async (
-    { actions: { createNode }, store, createNodeId, createContentDigest, reporter }: SourceNodesProps ,
+    { actions: { createNode }, store, createNodeId, createContentDigest, reporter }: SourceNodesProps,
     {
         username,
         apiKey,
@@ -52,13 +50,13 @@ export const sourceNodes = async (
     const formatProjectOwners = (owners: (OwnersEntity)[] | null | undefined) =>
         owners
             ? owners.map((owner: OwnersEntity) => {
-                const image = owner.images['276'];
-                delete owner.fields;
-                return {
-                    ...owner,
-                    image
-                };
-            })
+                  const image = owner.images['276'];
+                  delete owner.fields;
+                  return {
+                      ...owner,
+                      image
+                  };
+              })
             : null;
 
     const transformProjectModules = (slug: string, modules: Module[]) =>
@@ -121,35 +119,6 @@ export const sourceNodes = async (
         ({ data: { project } }: { data: { project: Project } }): ProjectFormatted => formatProject(project)
     );
 
-    // Find the total number of images needed to be downloaded
-    const totalImages = (): number => {
-        let total = 0;
-        formattedProjects.forEach(({ modules }: Project) => (total += modules.length + 1));
-        return total;
-    };
-
-    // Find out how many images are needed that aren't downloaded
-    const remainingImages = (): number => {
-        let remainder = 0;
-        formattedProjects.forEach(
-            ({ cover: { path: coverPath }, modules }: { cover: { path: string }; modules: Module[] }): void => {
-                if (!fs.existsSync(coverPath)) {
-                    remainder += 1;
-                }
-                modules.forEach(({ path }) => {
-                    if (!fs.existsSync(path)) {
-                        remainder += 1;
-                    }
-                });
-            }
-        );
-        return remainder;
-    };
-
-    let activity;
-    activity = reporter.activityTimer(`${totalImages()} Images | ${remainingImages()} Remaining`);
-    activity.start();
-
     const formattedUser = formatUser(user);
     const behanceID = createNodeId(`behance-user-${user.id}`);
 
@@ -204,13 +173,13 @@ export const sourceNodes = async (
         if (!fs.existsSync(path)) {
             await download.image({ url: src, dest: path });
         }
-        return createFileNode(path, createNodeId,{
-            project: slug,
+        return createFileNode(path, createNodeId, {
+            project: slug
         }).then((fileNode: object) =>
             createNode(
                 {
                     ...fileNode,
-                    cover:true,
+                    cover: true,
                     behanceImage: true,
                     behanceProject: slug,
                     sourceInstanceName: 'behance'
@@ -221,6 +190,4 @@ export const sourceNodes = async (
     };
 
     await Bluebird.all(formattedProjects.map(createAndProcessProjectCover));
-
-    activity.end(`Done`);
 };
