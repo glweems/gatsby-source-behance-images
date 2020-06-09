@@ -30,7 +30,7 @@
         "bluebird": "^3.5.4",
         "gatsby": "^2.6.0-alpha.1",
         "gatsby-source-filesystem": "^2.1.6",
-        "image-downloader": "^3.4.2"
+        "image-downloader": "^4.0.1"
     },
     "peerDependencies": {
         "gatsby": ">=2"
