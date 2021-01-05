@@ -26,7 +26,7 @@
     "author": "Garrett Weems <gwgraphicdesign@gmail.com>",
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.18.0",
+        "axios": "^0.21.1",
         "bluebird": "^3.5.4",
         "gatsby": "^2.6.0-alpha.1",
         "gatsby-source-filesystem": "^2.1.6",
